@@ -38,6 +38,35 @@
             gap: 10px;
         }
         
+        .refresh-btn {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+            transition: all 0.2s;
+            margin-left: 10px;
+        }
+        
+        .refresh-btn:hover {
+            background: #f5f5f5;
+            border-color: #52c41a;
+            color: #52c41a;
+        }
+        
+        .refresh-btn.loading svg {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
         .header-left .subtitle {
             font-size: 0.9rem;
             color: #888;
@@ -539,6 +568,9 @@
         <div class="header">
             <div class="header-left">
                 <h1>💰 稳定币理财收益看板</h1>
+                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                </button>
             </div>
             <div class="header-right">
                 <a href="https://x.com/Web3Daoge1" target="_blank" class="social-btn twitter-btn">
@@ -634,6 +666,26 @@
         const CACHE_KEY = 'stablecoin_dashboard_data';
         const CACHE_TIME_KEY = 'stablecoin_dashboard_time';
         const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+        
+        // 强制刷新数据（清除缓存）
+        async function forceRefresh() {
+            const btn = document.querySelector('.refresh-btn');
+            btn.classList.add('loading');
+            
+            // 清除缓存
+            localStorage.removeItem(CACHE_KEY);
+            localStorage.removeItem(CACHE_TIME_KEY);
+            console.log('缓存已清除，重新加载数据...');
+            
+            // 显示加载状态
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            
+            // 重新加载
+            await loadData();
+            
+            btn.classList.remove('loading');
+        }
         
         // 全局数据
         let allData = [];
