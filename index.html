@@ -78,13 +78,23 @@
             border: 1px solid #0088cc;
         }
         
-        .btn-emoji {
-            display: none;
-        }
-        
         .telegram-btn:hover {
             background: #0088cc;
             color: #fff;
+        }
+        
+        /* 最高收益区块 */
+        .top-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .top-label {
+            font-size: 0.9rem;
+            color: #888;
         }
         
         /* 最高收益卡片 */
@@ -92,9 +102,8 @@
             display: inline-block;
             background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
             color: #fff;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 20px;
-            margin-bottom: 20px;
             font-size: 1.1rem;
             font-weight: 600;
             box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
@@ -447,14 +456,6 @@
                 white-space: nowrap;
             }
             
-            .social-btn svg {
-                display: none;
-            }
-            
-            .btn-emoji {
-                display: inline;
-            }
-            
             .top-card {
                 font-size: 0.95rem;
                 padding: 10px 18px;
@@ -546,17 +547,20 @@
             <div class="header-right">
                 <a href="https://x.com/Web3Daoge1" target="_blank" class="social-btn twitter-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    <span class="btn-emoji">🐦</span> 关注刀哥推特
+                    关注刀哥推特
                 </a>
                 <a href="https://t.me/+3sdC7fJzDCxlZjY1" target="_blank" class="social-btn telegram-btn">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                    <span class="btn-emoji">✈️</span> 加入刀哥社群
+                    加入刀哥社群
                 </a>
             </div>
         </div>
         
         <!-- 最高收益卡片 -->
-        <div id="top-card-container"></div>
+        <div class="top-section">
+            <div class="top-label" id="subtitle">🔥 当前最高收益 (币安)</div>
+            <div id="top-card-container"></div>
+        </div>
         
         <div id="loading" class="loading">
             <div class="loading-spinner"></div>
@@ -630,6 +634,11 @@
             (url) => url
         ];
         
+        // 缓存配置
+        const CACHE_KEY = 'stablecoin_dashboard_data';
+        const CACHE_TIME_KEY = 'stablecoin_dashboard_time';
+        const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
+        
         // 全局数据
         let allData = [];
         let maxApyValue = 0;
@@ -647,6 +656,35 @@
             LIMIT: '单个账户限额',
             IS_LOCKED: '是否锁仓'
         };
+        
+        // 从缓存加载数据
+        function loadFromCache() {
+            try {
+                const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+                const cachedData = localStorage.getItem(CACHE_KEY);
+                
+                if (cachedTime && cachedData) {
+                    const elapsed = Date.now() - parseInt(cachedTime);
+                    if (elapsed < CACHE_DURATION) {
+                        console.log('使用缓存数据');
+                        return JSON.parse(cachedData);
+                    }
+                }
+            } catch (e) {
+                console.log('缓存读取失败');
+            }
+            return null;
+        }
+        
+        // 保存数据到缓存
+        function saveToCache(data) {
+            try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
+            } catch (e) {
+                console.log('缓存保存失败');
+            }
+        }
         
         // 解析 CSV
         function parseCSV(csv) {
@@ -770,7 +808,7 @@
                         ${maxApyRow[COL.APY]} ${maxApyRow[COL.COIN]}
                     </div>
                 `;
-                document.getElementById('subtitle').textContent = `当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
+                document.getElementById('subtitle').textContent = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
             }
         }
         
@@ -880,8 +918,30 @@
             document.getElementById('calc-year').textContent = yearProfit.toFixed(2) + ' ' + currentCalcCoin;
         }
         
-        // 加载数据
-        async function loadData() {
+        // 处理数据并渲染
+        function processAndRender(data) {
+            allData = data;
+            
+            // 找最高 APY
+            maxApyValue = 0;
+            maxApyRow = null;
+            allData.forEach(row => {
+                const apyValue = parseAPY(row[COL.APY]);
+                if (apyValue > maxApyValue) {
+                    maxApyValue = apyValue;
+                    maxApyRow = row;
+                }
+            });
+            
+            renderTopCard();
+            renderTable(allData);
+            
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+        
+        // 从网络加载数据
+        async function fetchFromNetwork() {
             for (let i = 0; i < CORS_PROXIES.length; i++) {
                 try {
                     const proxyUrl = CORS_PROXIES[i](DIRECT_URL);
@@ -893,31 +953,44 @@
                     const csv = await response.text();
                     if (!csv || csv.length < 50) throw new Error('数据为空');
                     
-                    allData = parseCSV(csv);
-                    if (allData.length === 0) throw new Error('解析失败');
+                    const data = parseCSV(csv);
+                    if (data.length === 0) throw new Error('解析失败');
                     
-                    // 找最高 APY
-                    maxApyValue = 0;
-                    maxApyRow = null;
-                    allData.forEach(row => {
-                        const apyValue = parseAPY(row[COL.APY]);
-                        if (apyValue > maxApyValue) {
-                            maxApyValue = apyValue;
-                            maxApyRow = row;
-                        }
-                    });
-                    
-                    renderTopCard();
-                    renderTable(allData);
-                    
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('dashboard').style.display = 'block';
-                    console.log('数据加载成功，共', allData.length, '条');
-                    return;
+                    console.log('网络数据加载成功，共', data.length, '条');
+                    return data;
                 } catch (error) {
                     console.error('代理', i, '失败:', error.message);
                     continue;
                 }
+            }
+            return null;
+        }
+        
+        // 加载数据（优先使用缓存）
+        async function loadData() {
+            // 1. 先尝试从缓存快速加载
+            const cachedData = loadFromCache();
+            if (cachedData && cachedData.length > 0) {
+                processAndRender(cachedData);
+                console.log('已从缓存加载数据');
+                
+                // 后台更新数据
+                fetchFromNetwork().then(freshData => {
+                    if (freshData) {
+                        saveToCache(freshData);
+                        processAndRender(freshData);
+                        console.log('后台已更新数据');
+                    }
+                });
+                return;
+            }
+            
+            // 2. 没有缓存，从网络加载
+            const networkData = await fetchFromNetwork();
+            if (networkData) {
+                saveToCache(networkData);
+                processAndRender(networkData);
+                return;
             }
             
             // 所有代理都失败
