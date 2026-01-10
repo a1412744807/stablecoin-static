@@ -169,22 +169,33 @@
             font-size: 13px;
             color: #d4a017;
             margin-top: 4px;
+            border: none;
+            outline: none;
         }
         
         /* 进度条 */
         .progress-bar {
-            width: 100%;
+            width: 80px;
+            max-width: 100%;
             height: 3px;
             background: #eee;
             border-radius: 2px;
             margin-top: 6px;
             overflow: hidden;
+            border: none;
+            outline: none;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #ffd666, #d4a017);
             border-radius: 2px;
+        }
+        
+        /* APY单元格容器 */
+        .apy-cell {
+            display: inline-block;
+            text-align: center;
         }
         
         /* 标签 */
@@ -773,7 +784,7 @@
                 if (remainingText) {
                     progressHtml = `<div class="remaining-time">${remainingText}</div>`;
                     if (remainingPercent !== null) {
-                        progressHtml += `<div class="progress-bar"><div class="progress-fill" style="width: ${100 - remainingPercent}%"></div></div>`;
+                        progressHtml += `<div class="progress-bar" style="margin: 6px auto 0;"><div class="progress-fill" style="width: ${100 - remainingPercent}%"></div></div>`;
                     }
                 }
                 
@@ -784,8 +795,10 @@
                         <div class="mobile-tags">${tagsHtml}</div>
                     </td>
                     <td>
-                        <span class="highlight">${apy}</span>
-                        ${progressHtml}
+                        <div class="apy-cell">
+                            <span class="highlight">${apy}</span>
+                            ${progressHtml}
+                        </div>
                     </td>
                     <td class="pc-only">${endTimeDisplay}</td>
                     <td class="pc-only">${tagsHtml || '-'}</td>
