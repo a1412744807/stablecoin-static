@@ -10,124 +10,104 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #f5f5f5;
             min-height: 100vh;
-            padding: 20px;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
         
         /* 头部 */
-        header {
-            text-align: center;
-            padding: 30px 0;
-            color: #fff;
-        }
-        
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        header p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        
-        /* 统计卡片 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        
-        .stat-card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-        
-        .stat-card.highlight {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: #fff;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        
-        .stat-card.highlight .stat-label {
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .stat-card.highlight .stat-value {
-            color: #fff;
-        }
-        
-        .stat-sub {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: 4px;
-        }
-        
-        .stat-card.highlight .stat-sub {
-            color: rgba(255,255,255,0.8);
-        }
-        
-        /* 筛选器 */
-        .filter-bar {
-            background: rgba(255,255,255,0.95);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 16px;
+        .header {
             display: flex;
-            gap: 16px;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: #333;
+            display: flex;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            gap: 10px;
         }
         
-        .filter-bar label {
+        .header-left .subtitle {
             font-size: 0.9rem;
-            color: #555;
-            font-weight: 500;
+            color: #888;
+            margin-top: 8px;
         }
         
-        .filter-bar select {
-            padding: 8px 16px;
-            border: 1px solid #ddd;
+        .header-right {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
             border-radius: 8px;
+            text-decoration: none;
             font-size: 0.9rem;
-            background: #fff;
-            cursor: pointer;
-            min-width: 120px;
+            font-weight: 500;
+            transition: all 0.2s;
         }
         
-        .filter-bar select:focus {
-            outline: none;
-            border-color: #667eea;
+        .twitter-btn {
+            background: #fff;
+            color: #1da1f2;
+            border: 1px solid #1da1f2;
+        }
+        
+        .twitter-btn:hover {
+            background: #1da1f2;
+            color: #fff;
+        }
+        
+        .telegram-btn {
+            background: #fff;
+            color: #0088cc;
+            border: 1px solid #0088cc;
+        }
+        
+        .telegram-btn:hover {
+            background: #0088cc;
+            color: #fff;
+        }
+        
+        /* 最高收益卡片 */
+        .top-card {
+            display: inline-block;
+            background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
+        }
+        
+        .top-card-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 4px;
         }
         
         /* 主表格卡片 */
         .table-card {
-            background: rgba(255,255,255,0.98);
-            border-radius: 16px;
+            background: #fff;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
         
         /* 表格样式 */
@@ -139,25 +119,24 @@
         
         .data-table th {
             background: #fafafa;
-            color: #666;
-            font-weight: 600;
-            padding: 16px 20px;
+            color: #888;
+            font-weight: normal;
+            padding: 14px 20px;
             text-align: center;
-            border-bottom: 2px solid #eee;
+            border-bottom: 1px solid #e0e0e0;
             font-size: 14px;
-            white-space: nowrap;
         }
         
         .data-table td {
             color: #333;
-            padding: 18px 20px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
             vertical-align: middle;
             text-align: center;
         }
         
         .data-table tr:hover td {
-            background: #f8f9ff;
+            background: #f5f5f5;
         }
         
         .data-table tr:last-child td {
@@ -167,152 +146,141 @@
         /* 币种单元格 */
         .coin-cell {
             text-align: left !important;
-        }
-        
-        .coin-name {
             font-weight: 600;
-            font-size: 1rem;
-            color: #333;
+            color: #222;
         }
         
-        .platform-name {
-            font-size: 0.8rem;
-            color: #888;
+        .sub-text {
+            font-size: 13px;
+            color: #999;
             margin-top: 4px;
+            font-weight: normal;
         }
         
         /* APY 高亮 */
-        .apy-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #333;
-        }
-        
-        .apy-value.highest {
-            color: #22c55e;
+        .highlight {
+            color: #d4a017;
+            font-weight: 600;
+            font-size: 16px;
         }
         
         /* 剩余时间 */
         .remaining-time {
-            font-size: 0.75rem;
-            color: #888;
-            margin-top: 6px;
+            font-size: 13px;
+            color: #d4a017;
+            margin-top: 4px;
         }
         
         /* 进度条 */
         .progress-bar {
-            width: 80px;
-            height: 4px;
-            background: #e5e5e5;
+            width: 100%;
+            height: 3px;
+            background: #eee;
             border-radius: 2px;
-            margin: 6px auto 0;
+            margin-top: 6px;
             overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #22c55e, #16a34a);
+            background: linear-gradient(90deg, #ffd666, #d4a017);
             border-radius: 2px;
-            transition: width 0.3s ease;
         }
         
         /* 标签 */
-        .tags {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
         .tag {
             display: inline-block;
-            padding: 4px 10px;
+            background: #f0f0f0;
             border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: #666;
+            margin: 2px;
         }
         
         .tag-limit {
-            background: #fef3c7;
-            color: #92400e;
+            background: #fff1f0;
+            color: #cf1322;
         }
         
         .tag-lock {
-            background: #fee2e2;
-            color: #dc2626;
+            background: #e6f7ff;
+            color: #1890ff;
         }
         
         .tag-pay {
-            background: #dbeafe;
-            color: #1d4ed8;
+            background: #f6ffed;
+            color: #52c41a;
         }
         
         /* 操作按钮 */
         .action-cell {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
+            text-align: center !important;
+            white-space: nowrap;
         }
         
         .calc-btn {
+            display: inline-block;
+            background: #fff7e6;
+            color: #d4a017;
+            border: 1px solid #ffd666;
+            border-radius: 6px;
             width: 36px;
             height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f0f0f0;
-            border-radius: 8px;
+            line-height: 34px;
+            font-size: 20px;
             cursor: pointer;
-            font-size: 1.1rem;
+            margin-right: 10px;
             transition: all 0.2s;
+            vertical-align: middle;
+            text-align: center;
         }
         
         .calc-btn:hover {
-            background: #e0e0e0;
-            transform: scale(1.05);
+            background: #ffd666;
+            border-color: #d4a017;
+            transform: scale(1.1);
         }
         
         .go-btn {
             display: inline-block;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1890ff;
             color: #fff;
             text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
             font-weight: 500;
             transition: all 0.2s;
-            white-space: nowrap;
+            vertical-align: middle;
         }
         
         .go-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            background: #40a9ff;
         }
         
         /* 加载状态 */
         .loading {
             text-align: center;
             padding: 60px 20px;
-            color: #fff;
+            color: #888;
         }
         
         .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(255,255,255,0.3);
-            border-top-color: #fff;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #eee;
+            border-top-color: #1890ff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            margin: 0 auto 16px;
         }
         
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
         
-        /* 计算器弹窗 */
+        /* 弹窗样式 */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -320,8 +288,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -331,196 +298,150 @@
             display: flex;
         }
         
-        .modal-content {
+        .modal-box {
             background: #fff;
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalIn 0.3s ease;
+            border-radius: 12px;
+            padding: 24px;
+            width: 320px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: modalIn 0.2s ease;
         }
         
         @keyframes modalIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
         
         .modal-title {
-            font-size: 1.3rem;
+            font-size: 18px;
             font-weight: 600;
             color: #333;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .modal-close {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: #f0f0f0;
-            border-radius: 8px;
-            font-size: 1.2rem;
             cursor: pointer;
-            transition: background 0.2s;
+            font-size: 24px;
+            color: #999;
+            line-height: 1;
         }
         
         .modal-close:hover {
-            background: #e0e0e0;
-        }
-        
-        .modal-info {
-            background: #f8f9ff;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            color: #333;
         }
         
         .modal-info-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 8px;
         }
         
-        .modal-info-row:last-child {
+        .modal-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .modal-info-item:last-child {
             margin-bottom: 0;
         }
         
-        .modal-info-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-        
-        .modal-info-value {
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .modal-input-group {
-            margin-bottom: 20px;
-        }
-        
-        .modal-input-label {
-            display: block;
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .modal-input-wrapper {
-            display: flex;
-            align-items: center;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-        
-        .modal-input-wrapper:focus-within {
-            border-color: #667eea;
-        }
-        
         .modal-input {
-            flex: 1;
-            padding: 14px 16px;
-            border: none;
-            font-size: 1.1rem;
-            outline: none;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 16px;
         }
         
-        .modal-input-unit {
-            padding: 14px 16px;
-            background: #f5f5f5;
-            color: #666;
-            font-weight: 500;
+        .modal-input:focus {
+            outline: none;
+            border-color: #1890ff;
         }
         
         .modal-result {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
         }
         
-        .modal-result-label {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            margin-bottom: 8px;
+        .modal-result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .modal-result-item:last-child {
+            margin-bottom: 0;
         }
         
         .modal-result-value {
-            font-size: 2rem;
-            font-weight: 700;
+            font-weight: 600;
+            color: #52c41a;
+            font-size: 16px;
         }
         
-        .modal-result-detail {
-            font-size: 0.8rem;
-            opacity: 0.85;
-            margin-top: 8px;
+        .modal-note {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
         }
         
-        /* 移动端标签（隐藏在PC端） */
+        /* 手机端标签（PC端隐藏） */
         .mobile-tags {
             display: none;
-            margin-top: 8px;
-        }
-        
-        /* 页脚 */
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: rgba(255,255,255,0.7);
-            font-size: 0.85rem;
-        }
-        
-        footer a {
-            color: #fff;
-            text-decoration: none;
+            margin-top: 6px;
         }
         
         /* ===== 移动端适配 ===== */
-        @media (max-width: 768px) {
-            body {
+        @media screen and (max-width: 768px) {
+            .container {
                 padding: 12px;
             }
             
-            header {
-                padding: 20px 0;
-            }
-            
-            header h1 {
-                font-size: 1.5rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .filter-bar {
+            .header {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
             }
             
-            .filter-bar select {
+            .header-left h1 {
+                font-size: 1.4rem;
+            }
+            
+            .header-right {
                 width: 100%;
+            }
+            
+            .social-btn {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .top-card {
+                font-size: 0.95rem;
+                padding: 10px 18px;
+            }
+            
+            .data-table {
+                font-size: 14px;
             }
             
             .data-table th,
             .data-table td {
-                padding: 12px 10px;
+                padding: 12px 8px;
             }
             
             /* 隐藏PC端列 */
@@ -530,57 +451,87 @@
             
             /* 显示移动端标签 */
             .mobile-tags {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 4px;
+                display: block;
             }
             
             .mobile-tags .tag {
-                font-size: 0.65rem;
+                font-size: 10px;
                 padding: 2px 6px;
             }
             
             .action-cell {
-                flex-direction: column;
-                gap: 8px;
+                white-space: normal;
+            }
+            
+            .calc-btn {
+                width: 32px;
+                height: 32px;
+                line-height: 30px;
+                font-size: 16px;
+                margin-right: 6px;
             }
             
             .go-btn {
-                padding: 8px 14px;
-                font-size: 0.8rem;
+                padding: 6px 12px;
+                font-size: 12px;
             }
             
-            .apy-value {
-                font-size: 1rem;
+            .highlight {
+                font-size: 14px;
             }
             
-            .modal-content {
+            .modal-box {
+                width: 90%;
+                max-width: 320px;
                 padding: 20px;
-                margin: 10px;
             }
         }
         
-        @media (max-width: 480px) {
-            .coin-name {
-                font-size: 0.9rem;
+        @media screen and (max-width: 480px) {
+            .coin-cell {
+                font-size: 13px;
             }
             
-            .platform-name {
-                font-size: 0.7rem;
+            .sub-text {
+                font-size: 11px;
             }
             
-            .data-table th {
-                font-size: 0.75rem;
+            .action-cell {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+            }
+            
+            .calc-btn {
+                margin-right: 4px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>💰 稳定币理财收益看板</h1>
-            <p>数据来自 Google Sheets · 点击计算器可预估收益</p>
-        </header>
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-left">
+                <h1>💰 稳定币理财收益看板</h1>
+                <div class="subtitle" id="subtitle">当前最高收益 (币安)</div>
+            </div>
+            <div class="header-right">
+                <a href="https://x.com/web3daoge" target="_blank" class="social-btn twitter-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    关注刀哥推特
+                </a>
+                <a href="https://t.me/web3daoge" target="_blank" class="social-btn telegram-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    加入刀哥理财社群
+                </a>
+            </div>
+        </div>
+        
+        <!-- 最高收益卡片 -->
+        <div id="top-card-container"></div>
         
         <div id="loading" class="loading">
             <div class="loading-spinner"></div>
@@ -588,76 +539,57 @@
         </div>
         
         <div id="dashboard" style="display: none;">
-            <!-- 统计卡片 -->
-            <div class="stats-grid" id="stats-grid"></div>
-            
-            <!-- 筛选器 -->
-            <div class="filter-bar">
-                <label>平台筛选：</label>
-                <select id="filter-platform" onchange="applyFilter()">
-                    <option value="">全部平台</option>
-                </select>
-                <label>币种筛选：</label>
-                <select id="filter-coin" onchange="applyFilter()">
-                    <option value="">全部币种</option>
-                </select>
-            </div>
-            
             <!-- 数据表格 -->
             <div class="table-card">
                 <table class="data-table">
                     <thead>
                         <tr>
                             <th>币种</th>
-                            <th>年化 (APY)</th>
+                            <th>年化（APY）</th>
                             <th class="pc-only">结束时间</th>
                             <th class="pc-only">限额/锁仓</th>
-                            <th>操作</th>
+                            <th>收益计算器</th>
                         </tr>
                     </thead>
                     <tbody id="table-body"></tbody>
                 </table>
             </div>
         </div>
-        
-        <footer>
-            <p>Made with ❤️ | 数据仅供参考，投资需谨慎</p>
-        </footer>
     </div>
     
     <!-- 计算器弹窗 -->
     <div class="modal-overlay" id="calc-modal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header">
-                <div class="modal-title">📊 收益计算器</div>
-                <button class="modal-close" onclick="closeCalcModal()">×</button>
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-title">
+                <span>📊 收益计算器</span>
+                <span class="modal-close" onclick="closeCalcModal()">×</span>
             </div>
-            <div class="modal-info">
-                <div class="modal-info-row">
-                    <span class="modal-info-label">平台</span>
-                    <span class="modal-info-value" id="calc-platform">-</span>
+            <div class="modal-info-row">
+                <div class="modal-info-item">
+                    <span>平台</span>
+                    <span id="calc-platform">-</span>
                 </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">币种</span>
-                    <span class="modal-info-value" id="calc-coin">-</span>
+                <div class="modal-info-item">
+                    <span>币种</span>
+                    <span id="calc-coin">-</span>
                 </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">年化收益率</span>
-                    <span class="modal-info-value" id="calc-apy">-</span>
-                </div>
-            </div>
-            <div class="modal-input-group">
-                <label class="modal-input-label">投入金额</label>
-                <div class="modal-input-wrapper">
-                    <input type="number" class="modal-input" id="calc-amount" placeholder="10000" oninput="calculateProfit()">
-                    <span class="modal-input-unit" id="calc-unit">USDT</span>
+                <div class="modal-info-item">
+                    <span>年化收益率</span>
+                    <span id="calc-apy">-</span>
                 </div>
             </div>
+            <input type="number" class="modal-input" id="calc-amount" placeholder="请输入投入金额" oninput="calculateProfit()">
             <div class="modal-result">
-                <div class="modal-result-label">预估月收益</div>
-                <div class="modal-result-value" id="calc-result">0.00</div>
-                <div class="modal-result-detail" id="calc-detail">年收益: 0.00</div>
+                <div class="modal-result-item">
+                    <span>月收益</span>
+                    <span class="modal-result-value" id="calc-month">0.00</span>
+                </div>
+                <div class="modal-result-item">
+                    <span>年收益</span>
+                    <span class="modal-result-value" id="calc-year">0.00</span>
+                </div>
             </div>
+            <div class="modal-note">* 收益为预估值，实际收益以平台为准</div>
         </div>
     </div>
 
@@ -670,14 +602,13 @@
         const CORS_PROXIES = [
             (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
             (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            (url) => url // 直接访问（部署后可用）
+            (url) => url
         ];
-        
-        let currentProxyIndex = 0;
         
         // 全局数据
         let allData = [];
         let maxApyValue = 0;
+        let maxApyRow = null;
         
         // 列名映射
         const COL = {
@@ -688,8 +619,7 @@
             END_TIME: '结束时间',
             PAY_TIME: '派息时间',
             LIMIT: '单个账户限额',
-            IS_LOCKED: '是否锁仓',
-            INCOME: '投入1wu一个月收益'
+            IS_LOCKED: '是否锁仓'
         };
         
         // 解析 CSV
@@ -704,14 +634,14 @@
                 headers.forEach((h, idx) => {
                     row[h.trim()] = values[idx] ? values[idx].trim() : '';
                 });
-                if (row[COL.PLATFORM]) { // 过滤空行
+                if (row[COL.PLATFORM]) {
                     data.push(row);
                 }
             }
             return data;
         }
         
-        // 解析单行 CSV（处理引号内的逗号）
+        // 解析单行 CSV
         function parseCSVLine(line) {
             const result = [];
             let current = '';
@@ -790,6 +720,19 @@
             return { text, percent: elapsedPercent };
         }
         
+        // 渲染最高收益卡片
+        function renderTopCard() {
+            const container = document.getElementById('top-card-container');
+            if (maxApyRow) {
+                container.innerHTML = `
+                    <div class="top-card">
+                        ${maxApyRow[COL.APY]} ${maxApyRow[COL.COIN]}
+                    </div>
+                `;
+                document.getElementById('subtitle').textContent = `当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
+            }
+        }
+        
         // 渲染表格
         function renderTable(data) {
             const tbody = document.getElementById('table-body');
@@ -822,110 +765,38 @@
                     tagsHtml += `<span class="tag tag-pay">${payTime}</span>`;
                 }
                 
-                // APY 是否最高
-                const isHighest = apyValue === maxApyValue;
-                
                 // 结束时间显示
                 const endTimeDisplay = endTime && !['暂无', '无截止', '无', '-', ''].includes(endTime) ? endTime : '-';
                 
+                // 进度条 HTML
+                let progressHtml = '';
+                if (remainingText) {
+                    progressHtml = `<div class="remaining-time">${remainingText}</div>`;
+                    if (remainingPercent !== null) {
+                        progressHtml += `<div class="progress-bar"><div class="progress-fill" style="width: ${100 - remainingPercent}%"></div></div>`;
+                    }
+                }
+                
                 tr.innerHTML = `
                     <td class="coin-cell">
-                        <div class="coin-name">${coin}</div>
-                        <div class="platform-name">${platform}</div>
-                        <div class="mobile-tags">${tagsHtml || ''}</div>
+                        ${coin}
+                        <div class="sub-text">${platform}</div>
+                        <div class="mobile-tags">${tagsHtml}</div>
                     </td>
                     <td>
-                        <div class="apy-value ${isHighest ? 'highest' : ''}">${apy}</div>
-                        ${remainingText ? `<div class="remaining-time">${remainingText}</div>` : ''}
-                        ${remainingPercent !== null ? `
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${100 - remainingPercent}%"></div>
-                            </div>
-                        ` : ''}
+                        <span class="highlight">${apy}</span>
+                        ${progressHtml}
                     </td>
                     <td class="pc-only">${endTimeDisplay}</td>
-                    <td class="pc-only">
-                        <div class="tags">${tagsHtml || '-'}</div>
-                    </td>
-                    <td>
-                        <div class="action-cell">
-                            <span class="calc-btn" onclick="openCalcModal('${coin}', '${platform}', '${apy}')" title="计算收益">🧮</span>
-                            <a href="${link}" target="_blank" class="go-btn">前往理财</a>
-                        </div>
+                    <td class="pc-only">${tagsHtml || '-'}</td>
+                    <td class="action-cell">
+                        <span class="calc-btn" onclick="openCalcModal('${coin}', '${platform}', '${apy}')" title="计算收益">🧮</span>
+                        <a href="${link}" target="_blank" class="go-btn">前往理财</a>
                     </td>
                 `;
                 
                 tbody.appendChild(tr);
             });
-        }
-        
-        // 渲染统计卡片
-        function renderStats(data) {
-            const statsGrid = document.getElementById('stats-grid');
-            
-            // 找最高 APY
-            let maxApy = 0;
-            let maxApyRow = null;
-            data.forEach(row => {
-                const apyValue = parseAPY(row[COL.APY]);
-                if (apyValue > maxApy) {
-                    maxApy = apyValue;
-                    maxApyRow = row;
-                }
-            });
-            
-            maxApyValue = maxApy;
-            
-            statsGrid.innerHTML = `
-                <div class="stat-card highlight">
-                    <div class="stat-label">🔥 当前最高收益</div>
-                    <div class="stat-value">${maxApyRow ? maxApyRow[COL.APY] : '-'}</div>
-                    <div class="stat-sub">${maxApyRow ? maxApyRow[COL.PLATFORM] : ''}</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">📊 收录产品数</div>
-                    <div class="stat-value">${data.length}</div>
-                    <div class="stat-sub">个理财产品</div>
-                </div>
-            `;
-        }
-        
-        // 初始化筛选器
-        function initFilters(data) {
-            const platforms = [...new Set(data.map(r => r[COL.PLATFORM]))].filter(Boolean);
-            const coins = [...new Set(data.map(r => r[COL.COIN]))].filter(Boolean);
-            
-            const platformSelect = document.getElementById('filter-platform');
-            platforms.forEach(p => {
-                const option = document.createElement('option');
-                option.value = p;
-                option.textContent = p;
-                platformSelect.appendChild(option);
-            });
-            
-            const coinSelect = document.getElementById('filter-coin');
-            coins.forEach(c => {
-                const option = document.createElement('option');
-                option.value = c;
-                option.textContent = c;
-                coinSelect.appendChild(option);
-            });
-        }
-        
-        // 应用筛选
-        function applyFilter() {
-            const platform = document.getElementById('filter-platform').value;
-            const coin = document.getElementById('filter-coin').value;
-            
-            let filtered = allData;
-            if (platform) {
-                filtered = filtered.filter(r => r[COL.PLATFORM] === platform);
-            }
-            if (coin) {
-                filtered = filtered.filter(r => r[COL.COIN] === coin);
-            }
-            
-            renderTable(filtered);
         }
         
         // 计算器相关
@@ -936,10 +807,9 @@
             document.getElementById('calc-platform').textContent = platform;
             document.getElementById('calc-coin').textContent = coin;
             document.getElementById('calc-apy').textContent = apy;
-            document.getElementById('calc-unit').textContent = coin;
             document.getElementById('calc-amount').value = '';
-            document.getElementById('calc-result').textContent = '0.00';
-            document.getElementById('calc-detail').textContent = '年收益: 0.00';
+            document.getElementById('calc-month').textContent = '0.00';
+            document.getElementById('calc-year').textContent = '0.00';
             
             currentCalcCoin = coin;
             currentCalcApy = parseAPY(apy);
@@ -962,11 +832,11 @@
             const yearProfit = amount * currentCalcApy / 100;
             const monthProfit = yearProfit / 12;
             
-            document.getElementById('calc-result').textContent = monthProfit.toFixed(2) + ' ' + currentCalcCoin;
-            document.getElementById('calc-detail').textContent = `年收益: ${yearProfit.toFixed(2)} ${currentCalcCoin}`;
+            document.getElementById('calc-month').textContent = monthProfit.toFixed(2) + ' ' + currentCalcCoin;
+            document.getElementById('calc-year').textContent = yearProfit.toFixed(2) + ' ' + currentCalcCoin;
         }
         
-        // 加载数据（支持多个代理自动切换）
+        // 加载数据
         async function loadData() {
             for (let i = 0; i < CORS_PROXIES.length; i++) {
                 try {
@@ -982,8 +852,18 @@
                     allData = parseCSV(csv);
                     if (allData.length === 0) throw new Error('解析失败');
                     
-                    renderStats(allData);
-                    initFilters(allData);
+                    // 找最高 APY
+                    maxApyValue = 0;
+                    maxApyRow = null;
+                    allData.forEach(row => {
+                        const apyValue = parseAPY(row[COL.APY]);
+                        if (apyValue > maxApyValue) {
+                            maxApyValue = apyValue;
+                            maxApyRow = row;
+                        }
+                    });
+                    
+                    renderTopCard();
                     renderTable(allData);
                     
                     document.getElementById('loading').style.display = 'none';
@@ -1000,7 +880,7 @@
             document.getElementById('loading').innerHTML = `
                 <p>❌ 数据加载失败</p>
                 <p style="font-size: 0.8rem; margin-top: 10px;">请检查网络连接或稍后重试</p>
-                <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #fff; border-radius: 8px; cursor: pointer;">🔄 重试</button>
+                <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #1890ff; color: #fff; border-radius: 8px; cursor: pointer;">🔄 重试</button>
             `;
         }
         
