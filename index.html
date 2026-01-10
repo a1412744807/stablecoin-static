@@ -585,12 +585,13 @@
         
         <!-- 最高收益卡片 -->
         <div class="top-section">
-            <div class="top-label" id="subtitle">🔥 当前最高年化收益 (币安)
+            <div class="top-label" id="subtitle">🔥 当前最高年化收益 (币安)</div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div id="top-card-container"></div>
                 <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
                 </button>
             </div>
-            <div id="top-card-container"></div>
         </div>
         
         <div id="loading" class="loading">
@@ -863,10 +864,7 @@
                         ${maxApyRow[COL.APY]} ${maxApyRow[COL.COIN]}
                     </div>
                 `;
-                document.getElementById('subtitle').innerHTML = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})
-                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-                </button>`;
+                document.getElementById('subtitle').textContent = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
             }
         }
         
