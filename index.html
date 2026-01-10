@@ -568,9 +568,6 @@
         <div class="header">
             <div class="header-left">
                 <h1>💰 稳定币理财收益看板</h1>
-                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-                </button>
             </div>
             <div class="header-right">
                 <a href="https://x.com/Web3Daoge1" target="_blank" class="social-btn twitter-btn">
@@ -586,7 +583,11 @@
         
         <!-- 最高收益卡片 -->
         <div class="top-section">
-            <div class="top-label" id="subtitle">🔥 当前最高年化收益 (币安)</div>
+            <div class="top-label" id="subtitle">🔥 当前最高年化收益 (币安)
+                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                </button>
+            </div>
             <div id="top-card-container"></div>
         </div>
         
@@ -671,19 +672,23 @@
         async function forceRefresh() {
             const btn = document.querySelector('.refresh-btn');
             btn.classList.add('loading');
-            
+
             // 清除缓存
             localStorage.removeItem(CACHE_KEY);
             localStorage.removeItem(CACHE_TIME_KEY);
             console.log('缓存已清除，重新加载数据...');
-            
+
             // 显示加载状态
             document.getElementById('loading').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
-            
-            // 重新加载
-            await loadData();
-            
+
+            // 强制从网络加载（绕过浏览器缓存）
+            const data = await fetchFromNetwork(true);
+            if (data) {
+                saveToCache(data);
+                processAndRender(data);
+            }
+
             btn.classList.remove('loading');
         }
         
@@ -856,7 +861,10 @@
                         ${maxApyRow[COL.APY]} ${maxApyRow[COL.COIN]}
                     </div>
                 `;
-                document.getElementById('subtitle').textContent = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
+                document.getElementById('subtitle').innerHTML = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})
+                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+                </button>`;
             }
         }
         
@@ -989,13 +997,14 @@
         }
         
         // 从网络加载数据
-        async function fetchFromNetwork() {
+        async function fetchFromNetwork(noCache = false) {
+            const url = noCache ? `${DIRECT_URL}&_t=${Date.now()}` : DIRECT_URL;
             for (let i = 0; i < CORS_PROXIES.length; i++) {
                 try {
-                    const proxyUrl = CORS_PROXIES[i](DIRECT_URL);
+                    const proxyUrl = CORS_PROXIES[i](url);
                     console.log('尝试加载:', proxyUrl);
-                    
-                    const response = await fetch(proxyUrl);
+
+                    const response = await fetch(proxyUrl, noCache ? { cache: 'no-store' } : {});
                     if (!response.ok) throw new Error('响应错误');
                     
                     const csv = await response.text();
