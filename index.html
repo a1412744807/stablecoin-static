@@ -998,13 +998,14 @@
         
         // 从网络加载数据
         async function fetchFromNetwork(noCache = false) {
-            const url = noCache ? `${DIRECT_URL}&_t=${Date.now()}` : DIRECT_URL;
+            // 始终添加时间戳绕过代理缓存
+            const url = `${DIRECT_URL}&_t=${Date.now()}`;
             for (let i = 0; i < CORS_PROXIES.length; i++) {
                 try {
                     const proxyUrl = CORS_PROXIES[i](url);
                     console.log('尝试加载:', proxyUrl);
 
-                    const response = await fetch(proxyUrl, noCache ? { cache: 'no-store' } : {});
+                    const response = await fetch(proxyUrl, { cache: 'no-store' });
                     if (!response.ok) throw new Error('响应错误');
                     
                     const csv = await response.text();
