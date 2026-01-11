@@ -492,6 +492,64 @@
             color: #1890ff;
         }
 
+        .theme-toggle {
+            cursor: pointer;
+            color: #666;
+            transition: color 0.2s;
+        }
+
+        .theme-toggle:hover {
+            color: #1890ff;
+        }
+
+        /* 深色模式 */
+        body.dark {
+            background: #1a1a2e;
+        }
+
+        body.dark .table-card,
+        body.dark .modal-box {
+            background: #16213e;
+        }
+
+        body.dark .data-table th {
+            background: #1a1a2e;
+            color: #888;
+        }
+
+        body.dark .data-table td {
+            color: #e0e0e0;
+            border-bottom-color: #2a2a4a;
+        }
+
+        body.dark .data-table tr:hover td {
+            background: #1a1a2e;
+        }
+
+        body.dark .header-left h1,
+        body.dark .coin-cell {
+            color: #e0e0e0;
+        }
+
+        body.dark .sub-text,
+        body.dark .top-label,
+        body.dark .footer-left,
+        body.dark .footer-icon,
+        body.dark .theme-toggle {
+            color: #888;
+        }
+
+        body.dark .social-btn {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark .refresh-btn {
+            background: #16213e;
+            border-color: #2a2a4a;
+            color: #888;
+        }
+
         /* ===== 移动端适配 ===== */
         @media screen and (max-width: 768px) {
             .container {
@@ -667,6 +725,9 @@
                 稳定币理财看板
             </a>
             <div class="footer-right">
+                <span class="theme-toggle" onclick="toggleTheme()" title="切换深色模式">
+                    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+                </span>
                 <a href="https://x.com/Web3Daoge1" target="_blank" class="footer-icon" title="X (Twitter)">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                 </a>
@@ -1120,6 +1181,17 @@
             `;
         }
         
+        // 主题切换
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        // 初始化主题
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+
         // 启动
         loadData();
     </script>
