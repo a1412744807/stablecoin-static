@@ -200,6 +200,23 @@
             border-bottom: 1px solid #e0e0e0;
             font-size: 14px;
         }
+
+        .data-table th.sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .data-table th.sortable:hover {
+            background: #f0f0f0;
+        }
+
+        .sort-icon {
+            display: inline-block;
+            margin-left: 4px;
+            font-size: 12px;
+            color: #d4a017;
+        }
         
         .data-table td {
             color: #333;
@@ -771,7 +788,10 @@
                     <thead>
                         <tr>
                             <th>币种</th>
-                            <th>年化（APY）</th>
+                            <th class="sortable" onclick="toggleApySort()" title="点击排序">
+                                年化（APY）
+                                <span class="sort-icon" id="sort-icon">↓</span>
+                            </th>
                             <th class="pc-only">结束时间</th>
                             <th class="pc-only">限额/锁仓</th>
                             <th>收益计算器</th>
@@ -879,6 +899,7 @@
         let allData = [];
         let maxApyValue = 0;
         let maxApyRow = null;
+        let sortAscending = false; // 默认降序（从高到低）
         
         // 列名映射
         const COL = {
@@ -1160,7 +1181,7 @@
         // 处理数据并渲染
         function processAndRender(data) {
             allData = data;
-            
+
             // 找最高 APY
             maxApyValue = 0;
             maxApyRow = null;
@@ -1171,12 +1192,34 @@
                     maxApyRow = row;
                 }
             });
-            
+
             renderTopCard();
-            renderTable(allData);
-            
+
+            // 默认按收益率从高到低排序
+            const sortedData = sortDataByApy(allData, sortAscending);
+            renderTable(sortedData);
+
             document.getElementById('loading').style.display = 'none';
             document.getElementById('dashboard').style.display = 'block';
+        }
+
+        // 按APY排序数据
+        function sortDataByApy(data, ascending) {
+            return [...data].sort((a, b) => {
+                const apyA = parseAPY(a[COL.APY]);
+                const apyB = parseAPY(b[COL.APY]);
+                return ascending ? apyA - apyB : apyB - apyA;
+            });
+        }
+
+        // 切换排序
+        function toggleApySort() {
+            sortAscending = !sortAscending;
+            const sortIcon = document.getElementById('sort-icon');
+            sortIcon.textContent = sortAscending ? '↑' : '↓';
+
+            const sortedData = sortDataByApy(allData, sortAscending);
+            renderTable(sortedData);
         }
         
         // 从网络加载数据
