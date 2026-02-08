@@ -2,8 +2,8 @@ name: Sync Google Sheets Data
 
 on:
   schedule:
-    # 每1分钟同步一次
-    - cron: '* * * * *'
+    # 每10分钟同步一次
+    - cron: '*/10 * * * *'
   workflow_dispatch: # 允许手动触发
 
 jobs:
