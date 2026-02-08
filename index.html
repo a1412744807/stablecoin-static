@@ -855,40 +855,19 @@
     </div>
 
     <script>
-        // Google Sheets CSV 导出链接
-        const SHEET_ID = '1UnFhhgjKTTKI0j4TbmyxyfAlE-DuAwICM-J9NrAmHD4';
-        const DIRECT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+        // 数据文件路径（由 GitHub Actions 自动更新）
+        const DATA_URL = 'data.json';
         
-        // 多个 CORS 代理备选
-        const CORS_PROXIES = [
-            (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-            (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-            (url) => url
-        ];
-        
-        // 缓存配置
-        const CACHE_KEY = 'stablecoin_dashboard_data';
-        const CACHE_TIME_KEY = 'stablecoin_dashboard_time';
-        const CACHE_DURATION = 5 * 60 * 1000; // 5分钟缓存
-        
-        // 强制刷新数据（清除缓存）
+        // 强制刷新数据
         async function forceRefresh() {
             const btn = document.querySelector('.refresh-btn');
             btn.classList.add('loading');
 
-            // 清除缓存
-            localStorage.removeItem(CACHE_KEY);
-            localStorage.removeItem(CACHE_TIME_KEY);
-            console.log('缓存已清除，重新加载数据...');
-
-            // 显示加载状态
             document.getElementById('loading').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
 
-            // 强制从网络加载（绕过浏览器缓存）
-            const data = await fetchFromNetwork(true);
+            const data = await fetchData();
             if (data) {
-                saveToCache(data);
                 processAndRender(data);
             }
 
@@ -914,76 +893,7 @@
             LIMIT: '单个账户限额',
             IS_LOCKED: '是否锁仓'
         };
-        
-        // 从缓存加载数据
-        function loadFromCache() {
-            try {
-                const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-                const cachedData = localStorage.getItem(CACHE_KEY);
-                
-                if (cachedTime && cachedData) {
-                    const elapsed = Date.now() - parseInt(cachedTime);
-                    if (elapsed < CACHE_DURATION) {
-                        console.log('使用缓存数据');
-                        return JSON.parse(cachedData);
-                    }
-                }
-            } catch (e) {
-                console.log('缓存读取失败');
-            }
-            return null;
-        }
-        
-        // 保存数据到缓存
-        function saveToCache(data) {
-            try {
-                localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-                localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
-            } catch (e) {
-                console.log('缓存保存失败');
-            }
-        }
-        
-        // 解析 CSV
-        function parseCSV(csv) {
-            const lines = csv.trim().split('\n');
-            const headers = parseCSVLine(lines[0]);
-            const data = [];
-            
-            for (let i = 1; i < lines.length; i++) {
-                const values = parseCSVLine(lines[i]);
-                const row = {};
-                headers.forEach((h, idx) => {
-                    row[h.trim()] = values[idx] ? values[idx].trim() : '';
-                });
-                if (row[COL.PLATFORM]) {
-                    data.push(row);
-                }
-            }
-            return data;
-        }
-        
-        // 解析单行 CSV
-        function parseCSVLine(line) {
-            const result = [];
-            let current = '';
-            let inQuotes = false;
-            
-            for (let i = 0; i < line.length; i++) {
-                const char = line[i];
-                if (char === '"') {
-                    inQuotes = !inQuotes;
-                } else if (char === ',' && !inQuotes) {
-                    result.push(current);
-                    current = '';
-                } else {
-                    current += char;
-                }
-            }
-            result.push(current);
-            return result;
-        }
-        
+
         // 解析 APY 数值
         function parseAPY(apyStr) {
             if (!apyStr) return 0;
@@ -1222,67 +1132,32 @@
             renderTable(sortedData);
         }
         
-        // 从网络加载数据
-        async function fetchFromNetwork(noCache = false) {
-            // 始终添加时间戳绕过代理缓存
-            const url = `${DIRECT_URL}&_t=${Date.now()}`;
-            for (let i = 0; i < CORS_PROXIES.length; i++) {
-                try {
-                    const proxyUrl = CORS_PROXIES[i](url);
-                    console.log('尝试加载:', proxyUrl);
-
-                    const response = await fetch(proxyUrl, { cache: 'no-store' });
-                    if (!response.ok) throw new Error('响应错误');
-                    
-                    const csv = await response.text();
-                    if (!csv || csv.length < 50) throw new Error('数据为空');
-                    
-                    const data = parseCSV(csv);
-                    if (data.length === 0) throw new Error('解析失败');
-                    
-                    console.log('网络数据加载成功，共', data.length, '条');
-                    return data;
-                } catch (error) {
-                    console.error('代理', i, '失败:', error.message);
-                    continue;
-                }
+        // 加载数据
+        async function fetchData() {
+            try {
+                const response = await fetch(DATA_URL + '?t=' + Date.now());
+                if (!response.ok) throw new Error('加载失败');
+                const data = await response.json();
+                console.log('数据加载成功，共', data.length, '条');
+                return data;
+            } catch (error) {
+                console.error('数据加载失败:', error);
+                return null;
             }
-            return null;
         }
-        
-        // 加载数据（优先使用缓存）
+
+        // 初始化
         async function loadData() {
-            // 1. 先尝试从缓存快速加载
-            const cachedData = loadFromCache();
-            if (cachedData && cachedData.length > 0) {
-                processAndRender(cachedData);
-                console.log('已从缓存加载数据');
-                
-                // 后台更新数据
-                fetchFromNetwork().then(freshData => {
-                    if (freshData) {
-                        saveToCache(freshData);
-                        processAndRender(freshData);
-                        console.log('后台已更新数据');
-                    }
-                });
-                return;
+            const data = await fetchData();
+            if (data) {
+                processAndRender(data);
+            } else {
+                document.getElementById('loading').innerHTML = `
+                    <p>❌ 数据加载失败</p>
+                    <p style="font-size: 0.8rem; margin-top: 10px;">请检查网络连接或稍后重试</p>
+                    <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #1890ff; color: #fff; border-radius: 8px; cursor: pointer;">🔄 重试</button>
+                `;
             }
-            
-            // 2. 没有缓存，从网络加载
-            const networkData = await fetchFromNetwork();
-            if (networkData) {
-                saveToCache(networkData);
-                processAndRender(networkData);
-                return;
-            }
-            
-            // 所有代理都失败
-            document.getElementById('loading').innerHTML = `
-                <p>❌ 数据加载失败</p>
-                <p style="font-size: 0.8rem; margin-top: 10px;">请检查网络连接或稍后重试</p>
-                <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #1890ff; color: #fff; border-radius: 8px; cursor: pointer;">🔄 重试</button>
-            `;
         }
         
         // 主题切换
@@ -1300,10 +1175,15 @@
         loadData();
     </script>
     
-    <!-- 风险提示 -->
+    <!-- 风险提示 / Disclaimer -->
     <div style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
-        <div style="background: #f5f5f5; color: #666; padding: 10px 14px; border-radius: 8px; font-size: 12px; line-height: 1.5; text-align: center;">
-            风险提示：本页面仅作信息展示，实际收益率可能随市场变化，数字资产理财存在风险，请自行决策后谨慎参与。
+        <div style="background: #f5f5f5; color: #666; padding: 12px 16px; border-radius: 8px; font-size: 12px; line-height: 1.6; text-align: center;">
+            <div style="margin-bottom: 6px;">
+                <strong>风险提示：</strong>本网站仅提供公开信息聚合，不构成投资建议。加密货币投资存在高风险，请自行研究 (DYOR)，谨慎决策。
+            </div>
+            <div style="color: #888;">
+                <strong>Disclaimer:</strong> This site aggregates public information only and does not constitute investment advice. Cryptocurrency investments carry high risks. Please do your own research (DYOR).
+            </div>
         </div>
     </div>
 </body>
