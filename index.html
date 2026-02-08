@@ -1165,15 +1165,27 @@
         // 初始化
         async function loadData() {
             const data = await fetchData();
-            if (data) {
+            if (data && data.length > 0) {
                 processAndRender(data);
             } else {
-                document.getElementById('loading').innerHTML = `
-                    <p>❌ 数据加载失败</p>
-                    <p style="font-size: 0.8rem; margin-top: 10px;">请检查网络连接或稍后重试</p>
-                    <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; border: none; background: #1890ff; color: #fff; border-radius: 8px; cursor: pointer;">🔄 重试</button>
-                `;
+                // 显示静态兜底数据
+                showFallbackData();
             }
+        }
+
+        // 静态兜底数据（API 挂掉时显示）
+        function showFallbackData() {
+            const fallbackData = [
+                { '平台': 'MEXC', '币种': 'USDT', '年化': '8%', '理财链接': 'https://www.mexc.com', '教程链接': '' },
+                { '平台': 'Bitget', '币种': 'USDC', '年化': '6%', '理财链接': 'https://www.bitget.com', '教程链接': '' },
+                { '平台': 'OKX', '币种': 'USDT', '年化': '5%', '理财链接': 'https://www.okx.com', '教程链接': '' }
+            ];
+            processAndRender(fallbackData);
+            // 显示提示
+            const notice = document.createElement('div');
+            notice.style.cssText = 'background:#fff3cd;color:#856404;padding:10px;text-align:center;font-size:12px;margin-bottom:10px;border-radius:6px;';
+            notice.innerHTML = '⚠️ 数据加载失败，显示的是缓存数据，请稍后刷新获取最新信息';
+            document.querySelector('.table-card').prepend(notice);
         }
         
         // 主题切换
