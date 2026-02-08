@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>稳定币理财收益看板</title>
+    <title>稳定币理财看板</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💰</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -621,12 +621,18 @@
 
         /* ===== 移动端适配 ===== */
         @media screen and (max-width: 768px) {
-            .navbar-inner {
-                padding: 10px 12px;
+            /* 导航栏：增加下边距，与下方内容分离 */
+            .navbar {
+                margin-bottom: 8px;
             }
 
+            .navbar-inner {
+                padding: 14px 12px;
+            }
+
+            /* 标题更大 */
             .navbar-left {
-                font-size: 1rem;
+                font-size: 1.15rem;
             }
 
             .navbar-right {
@@ -644,21 +650,21 @@
             .container {
                 padding: 12px;
             }
-            
+
             .header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .header-left h1 {
                 font-size: 1.4rem;
             }
-            
+
             .header-right {
                 width: 100%;
                 gap: 8px;
             }
-            
+
             .social-btn {
                 flex: 1;
                 justify-content: center;
@@ -666,36 +672,47 @@
                 font-size: 0.75rem;
                 white-space: nowrap;
             }
-            
+
+            /* 最高收益区块：增加上下间距 */
+            .top-section {
+                margin-top: 4px;
+                margin-bottom: 24px;
+            }
+
             .top-card {
                 font-size: 0.95rem;
                 padding: 10px 18px;
             }
-            
+
             .data-table {
                 font-size: 14px;
             }
-            
-            .data-table th,
+
+            /* 表头行：增加上下间距 */
+            .data-table th {
+                padding: 18px 10px;
+                font-size: 13px;
+            }
+
             .data-table td {
                 padding: 12px 8px;
             }
-            
+
             /* 隐藏PC端列 */
             .pc-only {
                 display: none;
             }
-            
+
             /* 显示移动端标签 */
             .mobile-tags {
                 display: block;
             }
-            
+
             .mobile-tags .tag {
                 font-size: 10px;
                 padding: 2px 6px;
             }
-            
+
             .action-cell {
                 white-space: normal;
                 vertical-align: top !important;
@@ -706,7 +723,7 @@
                 margin-top: 0 !important;
                 vertical-align: top;
             }
-            
+
             .calc-btn {
                 width: 32px;
                 height: 32px;
@@ -714,16 +731,16 @@
                 font-size: 16px;
                 margin-right: 6px;
             }
-            
+
             .go-btn {
                 padding: 6px 12px;
                 font-size: 12px;
             }
-            
+
             .highlight {
                 font-size: 14px;
             }
-            
+
             .modal-box {
                 width: 90%;
                 max-width: 320px;
@@ -759,7 +776,7 @@
     <nav class="navbar">
         <div class="navbar-inner">
             <div class="navbar-left">
-                💰 稳定币理财收益看板
+                💰 稳定币理财看板
             </div>
             <div class="navbar-right">
                 <a href="https://x.com/Web3Daoge1" target="_blank" class="social-btn twitter-btn">
