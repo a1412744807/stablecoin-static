@@ -741,6 +741,11 @@
                 font-size: 14px;
             }
 
+            /* 剩余时间字号缩小，保持一行 */
+            .remaining-time {
+                font-size: 11px;
+            }
+
             .modal-box {
                 width: 90%;
                 max-width: 320px;
@@ -868,6 +873,10 @@
             <input type="number" class="modal-input" id="calc-amount" placeholder="请输入投入金额" oninput="calculateProfit()">
             <div class="modal-result">
                 <div class="modal-result-item">
+                    <span>日收益</span>
+                    <span class="modal-result-value" id="calc-day">0.00</span>
+                </div>
+                <div class="modal-result-item">
                     <span>月收益</span>
                     <span class="modal-result-value" id="calc-month">0.00</span>
                 </div>
@@ -980,9 +989,9 @@
             
             let text;
             if (days > 0) {
-                text = `剩余 ${days}天${hours}小时`;
+                text = `剩余${days}天${hours}时`;
             } else {
-                text = `剩余 ${hours}小时`;
+                text = `剩余${hours}小时`;
             }
             
             // 计算进度百分比：(当前时间 - 开始时间) / (结束时间 - 开始时间)
@@ -1116,7 +1125,9 @@
             const amount = parseFloat(document.getElementById('calc-amount').value) || 0;
             const yearProfit = amount * currentCalcApy / 100;
             const monthProfit = yearProfit / 12;
-            
+            const dayProfit = yearProfit / 365;
+
+            document.getElementById('calc-day').textContent = dayProfit.toFixed(2) + ' ' + currentCalcCoin;
             document.getElementById('calc-month').textContent = monthProfit.toFixed(2) + ' ' + currentCalcCoin;
             document.getElementById('calc-year').textContent = yearProfit.toFixed(2) + ' ' + currentCalcCoin;
         }
