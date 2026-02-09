@@ -70,33 +70,7 @@
             align-items: center;
             gap: 10px;
         }
-        
-        .refresh-btn {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 8px 12px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #666;
-            transition: all 0.2s;
-            margin-left: 10px;
-        }
-        
-        .refresh-btn:hover {
-            background: #f5f5f5;
-            border-color: #52c41a;
-            color: #52c41a;
-        }
-        
-        .refresh-btn.loading {
-            background: #52c41a;
-            color: #fff;
-            border-color: #52c41a;
-        }
-        
+
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -146,42 +120,14 @@
             background: #0088cc;
             color: #fff;
         }
-        
-        /* 最高收益区块 */
-        .top-section {
-            margin-bottom: 20px;
-        }
-        
-        .top-label {
-            font-size: 0.9rem;
-            color: #888;
-            margin-bottom: 8px;
-        }
-        
-        /* 最高收益卡片 */
-        .top-card {
-            display: inline-block;
-            background: linear-gradient(135deg, #52c41a 0%, #389e0d 100%);
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(82, 196, 26, 0.3);
-        }
-        
-        .top-card-label {
-            font-size: 0.8rem;
-            opacity: 0.9;
-            margin-bottom: 4px;
-        }
-        
+
         /* 主表格卡片 */
         .table-card {
             background: #fff;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            margin-top: 16px;
         }
         
         /* 表格样式 */
@@ -254,6 +200,7 @@
             color: #d4a017;
             font-weight: 600;
             font-size: 16px;
+            white-space: nowrap;
         }
         
         /* 剩余时间 */
@@ -515,52 +462,6 @@
             display: none;
             margin-top: 6px;
         }
-        
-        /* 底部 Footer */
-        .footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            margin-top: 20px;
-        }
-
-        .footer-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #666;
-            font-size: 14px;
-            text-decoration: none;
-        }
-
-        .footer-left:hover {
-            color: #1890ff;
-        }
-
-        .footer-right {
-            display: flex;
-            gap: 16px;
-        }
-
-        .footer-icon {
-            color: #666;
-            transition: color 0.2s;
-        }
-
-        .footer-icon:hover {
-            color: #1890ff;
-        }
-
-        .theme-toggle {
-            cursor: pointer;
-            color: #666;
-            transition: color 0.2s;
-        }
-
-        .theme-toggle:hover {
-            color: #1890ff;
-        }
 
         /* 深色模式 */
         body.dark {
@@ -591,23 +492,13 @@
             color: #e0e0e0;
         }
 
-        body.dark .sub-text,
-        body.dark .top-label,
-        body.dark .footer-left,
-        body.dark .footer-icon,
-        body.dark .theme-toggle {
+        body.dark .sub-text {
             color: #888;
         }
 
         body.dark .social-btn {
             background: #16213e;
             border-color: #2a2a4a;
-        }
-
-        body.dark .refresh-btn {
-            background: #16213e;
-            border-color: #2a2a4a;
-            color: #888;
         }
 
         body.dark .navbar {
@@ -668,20 +559,10 @@
             .social-btn {
                 flex: 1;
                 justify-content: center;
-                padding: 8px 10px;
-                font-size: 0.75rem;
+                padding: 8px 8px;
+                font-size: 0.7rem;
                 white-space: nowrap;
-            }
-
-            /* 最高收益区块：增加上下间距 */
-            .top-section {
-                margin-top: 4px;
-                margin-bottom: 24px;
-            }
-
-            .top-card {
-                font-size: 0.95rem;
-                padding: 10px 18px;
+                gap: 4px;
             }
 
             .data-table {
@@ -797,17 +678,6 @@
     </nav>
 
     <div class="container">
-        <!-- 最高收益卡片 -->
-        <div class="top-section">
-            <div class="top-label" id="subtitle">🔥 当前最高年化收益 (币安)</div>
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <div id="top-card-container"></div>
-                <button class="refresh-btn" onclick="forceRefresh()" title="刷新数据">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-                </button>
-            </div>
-        </div>
-        
         <div id="loading" class="loading">
             <div class="loading-spinner"></div>
             <p>正在加载数据...</p>
@@ -833,20 +703,6 @@
             </div>
         </div>
 
-        <!-- 底部 Footer -->
-        <footer class="footer">
-            <div class="footer-right" style="margin-left: auto;">
-                <span class="theme-toggle" onclick="toggleTheme()" title="切换深色模式">
-                    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
-                </span>
-                <a href="https://x.com/Web3Daoge1" target="_blank" class="footer-icon" title="X (Twitter)">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                </a>
-                <a href="https://t.me/+3sdC7fJzDCxlZjY1" target="_blank" class="footer-icon" title="Telegram">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                </a>
-            </div>
-        </footer>
     </div>
 
     <!-- 计算器弹窗 -->
@@ -866,7 +722,7 @@
                     <span id="calc-coin">-</span>
                 </div>
                 <div class="modal-info-item">
-                    <span>年化收益率</span>
+                    <span>年化</span>
                     <span id="calc-apy">-</span>
                 </div>
             </div>
@@ -893,26 +749,9 @@
         // 数据文件路径（由 GitHub Actions 自动更新）
         const DATA_URL = 'data.json';
         
-        // 强制刷新数据
-        async function forceRefresh() {
-            const btn = document.querySelector('.refresh-btn');
-            btn.classList.add('loading');
-
-            document.getElementById('loading').style.display = 'flex';
-            document.getElementById('dashboard').style.display = 'none';
-
-            const data = await fetchData();
-            if (data) {
-                processAndRender(data);
-            }
-
-            btn.classList.remove('loading');
-        }
-        
         // 全局数据
         let allData = [];
         let maxApyValue = 0;
-        let maxApyRow = null;
         let sortAscending = false; // 默认降序（从高到低）
         
         // 列名映射
@@ -1005,23 +844,10 @@
                 const totalDays = 30;
                 progressPercent = Math.max(0, Math.min(100, (totalDays - days) / totalDays * 100));
             }
-            
+
             return { text, percent: progressPercent };
         }
-        
-        // 渲染最高收益卡片
-        function renderTopCard() {
-            const container = document.getElementById('top-card-container');
-            if (maxApyRow) {
-                container.innerHTML = `
-                    <div class="top-card">
-                        ${maxApyRow[COL.APY]} ${maxApyRow[COL.COIN]}
-                    </div>
-                `;
-                document.getElementById('subtitle').textContent = `🔥 当前最高收益 (${maxApyRow[COL.PLATFORM]})`;
-            }
-        }
-        
+
         // 渲染表格
         function renderTable(data) {
             const tbody = document.getElementById('table-body');
@@ -1138,16 +964,12 @@
 
             // 找最高 APY
             maxApyValue = 0;
-            maxApyRow = null;
             allData.forEach(row => {
                 const apyValue = parseAPY(row[COL.APY]);
                 if (apyValue > maxApyValue) {
                     maxApyValue = apyValue;
-                    maxApyRow = row;
                 }
             });
-
-            renderTopCard();
 
             // 默认按收益率从高到低排序
             const sortedData = sortDataByApy(allData, sortAscending);
@@ -1233,17 +1055,13 @@
     
     <!-- 风险提示 / Disclaimer -->
     <div style="max-width: 1200px; margin: 20px auto; padding: 0 20px;">
-        <div style="background: #f5f5f5; color: #666; padding: 12px 16px; border-radius: 8px; font-size: 12px; line-height: 1.6; text-align: center;">
-            <div style="margin-bottom: 6px;">
-                <strong>风险提示：</strong>本网站仅提供公开信息聚合，不构成投资建议。加密货币投资存在高风险，请自行研究 (DYOR)，谨慎决策。
-            </div>
-            <div style="color: #888;">
-                <strong>Disclaimer:</strong> This site aggregates public information only and does not constitute investment advice. Cryptocurrency investments carry high risks. Please do your own research (DYOR).
-            </div>
-            <div style="margin-top: 10px; color: #999;">
-                <a href="privacy.html" style="color: #1890ff; text-decoration: none; margin: 0 10px;">Privacy Policy</a>
-                <a href="terms.html" style="color: #1890ff; text-decoration: none; margin: 0 10px;">Terms of Service</a>
-            </div>
+        <div style="background: #f5f5f5; color: #666; padding: 12px 16px; border-radius: 8px; font-size: 12px; line-height: 1.8; text-align: center;">
+            <strong>风险提示：</strong>本网站仅提供公开信息聚合，不构成投资建议。加密货币投资存在高风险，请自行研究 (DYOR)。<br>
+            <a href="privacy.html" style="color: #1890ff; text-decoration: none;">隐私政策</a>
+            <span style="color: #ccc; margin: 0 8px;">|</span>
+            <a href="terms.html" style="color: #1890ff; text-decoration: none;">服务条款</a>
+            <span style="color: #ccc; margin: 0 8px;">|</span>
+            <a href="https://x.com/Web3Daoge1" target="_blank" style="color: #1890ff; text-decoration: none;">𝕏 @Web3Daoge1</a>
         </div>
     </div>
 </body>
