@@ -302,26 +302,24 @@
         }
         
         .calc-btn {
-            display: inline-block;
-            background: #fff7e6;
-            color: #d4a017;
-            border: 1px solid #ffd666;
-            border-radius: 6px;
-            width: 36px;
-            height: 36px;
-            line-height: 34px;
-            font-size: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            color: #aaa;
+            border: none;
+            border-radius: 8px;
+            width: 34px;
+            height: 34px;
             cursor: pointer;
-            margin-right: 10px;
+            margin-right: 8px;
             transition: all 0.2s;
             vertical-align: middle;
-            text-align: center;
         }
         
         .calc-btn:hover {
-            background: #ffd666;
-            border-color: #d4a017;
-            transform: scale(1.1);
+            background: #eee;
+            color: #888;
         }
         
         .go-btn {
@@ -676,10 +674,8 @@
             }
 
             .calc-btn {
-                width: 32px;
-                height: 32px;
-                line-height: 30px;
-                font-size: 16px;
+                width: 28px;
+                height: 28px;
                 margin-right: 6px;
             }
 
@@ -1016,7 +1012,7 @@
                     <td class="pc-only">${tagsHtml || '-'}</td>
                     <td class="action-cell">
                         <div class="action-inner">
-                            <span class="calc-btn" onclick="openCalcModal('${coin}', '${platform}', '${apy}')" title="计算收益"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v4h10V4H7zm0 6v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v2h2v-2h-2zm-8 4v2h2v-2H7zm4 0v2h2v-2h-2zm4 0v6h2v-6h-2zm-8 4v2h2v-2H7zm4 0v2h2v-2h-2z"/></svg></span>
+                            <span class="calc-btn" onclick="openCalcModal('${coin}', '${platform}', '${apy}')" title="计算收益"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="11" x2="8" y2="11"/><line x1="12" y1="11" x2="12" y2="11"/><line x1="16" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="8" y2="15"/><line x1="12" y1="15" x2="12" y2="15"/><line x1="16" y1="15" x2="16" y2="15"/><line x1="8" y1="19" x2="8" y2="19"/><line x1="12" y1="19" x2="12" y2="19"/><line x1="16" y1="19" x2="16" y2="19"/></svg></span>
                             <a href="${tutorialLink || '#'}" target="_blank" class="go-btn">教程</a>
                         </div>
                     </td>
