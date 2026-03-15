@@ -901,7 +901,28 @@
         </div>
     </div>
 
+    <!-- 公告弹窗 -->
+    <div class="modal-overlay active" id="announce-modal" onclick="closeAnnounce(event)">
+        <div class="modal-box" onclick="event.stopPropagation()" style="width:360px;text-align:center;">
+            <div class="modal-title">
+                <span>📢 网站升级公告</span>
+                <span class="modal-close" onclick="closeAnnounce()" style="font-size:18px;">×</span>
+            </div>
+            <div style="color:#555;font-size:15px;line-height:1.8;text-align:left;margin-bottom:20px;">
+                <p><strong>刀哥稳定币理财网站已升级！</strong></p>
+                <p style="margin-top:8px;">后续所有信息源将统一聚合到新网站，体验更好、数据更全。</p>
+            </div>
+            <a href="https://app.barker.money/" target="_blank" style="display:block;background:#1890ff;color:#fff;text-decoration:none;font-size:16px;font-weight:600;padding:12px 0;border-radius:8px;">前往新网站 →</a>
+        </div>
+    </div>
+
     <script>
+        // 关闭公告弹窗
+        function closeAnnounce(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('announce-modal').classList.remove('active');
+        }
+
         // 数据文件路径（由 GitHub Actions 自动更新）
         const DATA_URL = 'data.json';
         
